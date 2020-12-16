@@ -1,3 +1,4 @@
 (library
  (name alembic)
- (libraries core))
+ (libraries core)
+ (modules scanner))

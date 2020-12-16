@@ -1,1 +1,2 @@
-let hello_world = "Hello, World!"
+
+module Scanner = Scanner
