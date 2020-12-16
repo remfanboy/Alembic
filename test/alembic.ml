@@ -1,4 +1,4 @@
-open Marked
+open Alembic
 
 let test_helloworld () = 
   Alcotest.(check string) "same string" "Hello, World!" hello_world

@@ -1,4 +1,4 @@
 (executable
- (public_name marked)
+ (public_name alembic)
  (name main)
- (libraries marked))
+ (libraries alembic))
