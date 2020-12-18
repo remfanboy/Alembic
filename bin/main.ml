@@ -1,3 +1,1 @@
-open Alembic
-
-let () = print_endline hello_world
+let () = print_endline "ata"

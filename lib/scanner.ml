@@ -1,19 +1,17 @@
-(**
-  Scans a token from a string and returns a token from it.
-*)
+(** Scans a token from a string and returns a token from it. *)
 
 type token_type =
   | SHARP 
   | UNDERSCORE
   | ASTERISK
   | MINUS
-  | TEXT
+  | TEXT of string
   | ACUDE
   | EOF
   | LINEBREAK
+  [@@deriving show]
 
 type token = {
-    text: string option;
     line: int;
     token_type: token_type;
 } 
@@ -49,18 +47,18 @@ let new_context str =
 
 (* Creates a token with literal meaning *)
 let non_literal_tkn kind ctx = 
-  { text = None; line = ctx.line; token_type = kind; }, ctx
+  { line = ctx.line; token_type = kind; }, ctx
 
 (* converts char to token *)
 let escaped_tkn chr ctx = 
-  { text = Some(Core.Char.to_string chr); line = ctx.line; token_type = TEXT; }, ctx
+  {line = ctx.line; token_type = TEXT(Core.Char.to_string chr); }, ctx
 
 let set_start ctx = 
   { ctx with start = ctx.current }
 
 (* returns a token with text inside it *)
 let literal text line = 
-  { text = Some text; line = line; token_type = TEXT}
+  { line = line; token_type = TEXT(text)}
 
 (*  creates a text literal by recursion *)
 let rec add_text_literal context =
