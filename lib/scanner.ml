@@ -15,6 +15,7 @@ type token = {
     line: int;
     token_type: token_type;
 } 
+[@@deriving show]
 
 (* This is used to locate where it'll read next *)
 type scanner_context = {

@@ -40,12 +40,49 @@ let test_title_parser () =
   match Parser.parse_entry ctx with
     | Ok(expr, _ctx) ->
         (match expr with
-        | Parser.Title(Parser.Group([Parser.Text(" potato chips")]),2) -> 
+        | Parser.Title([Parser.Text(" potato chips")],2) -> 
           ()
         | _ -> 
           Alcotest.fail ("Error on ast "^Parser.show_expr(expr)))
     | Error err ->
-      Alcotest.fail ("Error on parsing "^Parser.show_syntax_error(err))
+      Alcotest.fail ("Error on parsing "^Parser.show_error(err))
+
+let test_asterisk_parser () =
+  let ctx = Scanner.new_context "##*** potato chips ***\n# today is gonna be the day that is gonna the day" in
+    match Parser.parse_entry ctx with
+      | Error err ->
+        Alcotest.fail ("Error on parsing "^Parser.show_error(err))
+      | Ok(expr, _ctx) ->
+        match expr with
+        | Parser.Title([Parser.Italic [Parser.Bold ([Parser.Text(" potato chips ")])]],2) -> 
+          ()
+        | _ -> 
+          Alcotest.fail ("Error on ast "^Parser.show_expr(expr))
+
+let test_code_parser () =
+  let ctx = Scanner.new_context "```ata\nde```" in
+    match Parser.parse_entry ctx with
+      | Error err ->
+        Alcotest.fail ("Error on parsing "^Parser.show_error(err))
+      | Ok(expr, _ctx) ->
+        match expr with
+        | Parser.Codeblock("ata\nde") -> 
+          ()
+        | _ -> 
+          Alcotest.fail ("Error on ast "^Parser.show_expr(expr))
+
+let test_list_parser () =
+  let ctx = Scanner.new_context "- ata\nde" in
+    match Parser.parse_entry ctx with
+      | Error err ->
+        Alcotest.fail ("Error on parsing "^Parser.show_error(err))
+      | Ok(expr, _ctx) ->
+        match expr with
+        | Parser.Item(_) -> 
+          ()
+        | _ -> 
+          Alcotest.fail ("Error on ast "^Parser.show_expr(expr))
+
 let () = 
   Alcotest.run "First" [
     ("Scanner",
@@ -58,6 +95,9 @@ let () =
         ("Simple depth parse", `Quick, test_depth_parser);
         ("Simple text parse", `Quick, test_join_parser);
         ("Simple title parsing", `Quick, test_title_parser);
+        ("Simple asterisk parsing", `Quick, test_asterisk_parser);
+        ("Simple code parsing", `Quick, test_code_parser);
+        ("Simple list parsing", `Quick, test_list_parser)
       ]
     )
   ]
