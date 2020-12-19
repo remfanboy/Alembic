@@ -5,9 +5,9 @@ let rec visit ast =
     | Bold exprs          -> String.concat "" ["<b>"; visit_list exprs ;"</b>"]
     | Underline exprs     -> String.concat "" ["<u>"; visit_list exprs ;"</u>"]
     | Italic exprs        -> String.concat "" ["<i>"; visit_list exprs ;"</i>"]
-    | Codeline exprs      -> String.concat "" ["<pre>"; visit_list exprs ;"</pre>"]
+    | Codeline exprs      -> String.concat "" ["<code>"; visit_list exprs ;"</code>"]
     | Item exprs          -> String.concat "" ["<p>• "; visit_list exprs ;"</p>"]
-    | Codeblock str       -> String.concat "" ["<code>";  str ;"</code>"]
+    | Codeblock str       -> String.concat "" ["<pre>";  str ;"</pre>"]
     | Text text           -> text
     | Linebreak           -> ""
     | Title (exprs, depth)   -> 
