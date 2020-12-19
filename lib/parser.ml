@@ -9,7 +9,7 @@ type expr =
   | Item of expr list
   | Codeblock of string
   | Text of string
-  | Group of expr list
+  | Linebreak
   [@@deriving show]
 
 type error = 
@@ -22,7 +22,7 @@ let next ctx = scan_token ctx
 
 (* 
    it returns the token that it matched and advances to the next step in the Scanner 
-   if it not matches the pattern it will raise an Error
+   if it not matches the pattern it will returns an Error
 *)
 
 let eat_pat ctx pat =
@@ -95,7 +95,7 @@ let rec parse_entry ctx =
         | ACUDE -> parse_code ctx
         | MINUS -> parse_list ctx
         | UNDERSCORE -> parse_underscore ctx
-        | LINEBREAK ->  Ok(Text(""), new_ctx)
+        | LINEBREAK ->  Ok(Linebreak, new_ctx)
         | TEXT str -> Ok(Text(str), new_ctx)
         | _ -> Error (SyntaxError tkn)
 
@@ -198,5 +198,5 @@ let rec parse_compound ctx =
 let parse text = 
   let res = Scanner.new_context text |> parse_compound in
   match res with
-    | Ok x -> Ok(Group x)
     | Error err -> Error err
+    | Ok x -> Ok(x)
