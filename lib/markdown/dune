@@ -1,0 +1,5 @@
+(library
+ (name md)
+ (libraries core ppx_deriving str)
+ (preprocess
+  (pps ppx_deriving.show)))

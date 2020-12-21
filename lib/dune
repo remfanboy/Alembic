@@ -1,5 +1,3 @@
 (library
  (name alembic)
-  (libraries core ppx_deriving str)
- (preprocess
-  (pps ppx_deriving.show)))
+ (libraries md))
