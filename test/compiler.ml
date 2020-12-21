@@ -83,14 +83,22 @@ let test_list_parser () =
         | _ -> 
           Alcotest.fail ("Error on ast "^Md.Parser.show_expr(expr))
 
+
+let test_list_compile () =
+  match Md.Compiler.compile "-ata\n-b" with
+    | Ok res ->
+      Alcotest.(check string) "Equality" "<p>• ata</p><p>• b</p>" res
+    | Error err -> 
+      Alcotest.fail ("Error on parsing "^Md.Parser.show_error(err))
+
 let () = 
   Alcotest.run "First" [
-    ("Md.Scanner",
+    ("Scanner",
       [
         ("simple scan", `Quick, test_scanner);
       ]
     ); 
-    ("Md.Parser",
+    ("Parser",
       [
         ("Simple depth parse", `Quick, test_depth_parser);
         ("Simple text parse", `Quick, test_join_parser);
@@ -99,5 +107,8 @@ let () =
         ("Simple code parsing", `Quick, test_code_parser);
         ("Simple list parsing", `Quick, test_list_parser)
       ]
-    )
+    );
+    ("Compiler", [
+        ("Simple list parse", `Quick, test_list_compile)
+    ])
   ]
