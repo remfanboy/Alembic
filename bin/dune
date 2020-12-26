@@ -1,4 +1,6 @@
 (executable
  (public_name alembic)
  (name main)
- (libraries alembic))
+ (libraries alembic fileutils)
+ (preprocess
+  (pps ppx_let)))
