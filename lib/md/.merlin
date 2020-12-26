@@ -47,7 +47,7 @@ B /home/chiyoku/.opam/default/lib/typerep
 B /home/chiyoku/.opam/default/lib/variantslib
 B /usr/lib/ocaml
 B /usr/lib/ocaml/threads
-B ../../_build/default/lib/markdown/.md.objs/byte
+B ../../_build/default/lib/md/.md.objs/byte
 S /home/chiyoku/.opam/default/lib/base
 S /home/chiyoku/.opam/default/lib/base/base_internalhash_types
 S /home/chiyoku/.opam/default/lib/base/caml

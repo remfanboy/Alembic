@@ -159,7 +159,7 @@ and parse_code ctx =
           | Ok(ctx) -> Ok (Codeline expr, ctx) 
 
 and parse_list ctx = 
-  let pat = (function ACUDE -> true | _ -> false) in
+  let pat = (function MINUS -> true | _ -> false) in
   match eat_depth ctx pat with
     | Error err -> Error err  
     | Ok(_depth, ctx) ->
