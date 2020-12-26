@@ -1,0 +1,6 @@
+[theme]
+name = "Defo"
+posts_dir = "./posts"
+
+[html]
+posts_html = "./pages/posts.html"
